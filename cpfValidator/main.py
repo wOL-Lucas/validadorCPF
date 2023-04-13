@@ -5,7 +5,7 @@ def verifierDigitCalculator(cpf,secondDigit):
         if len(cpf) != 11 and secondDigit == False:
             raise Exception('CPF não é válido')
         
-        elif len(cpf) !=< 11 and secondDigit == True or len(cpf) == 11:
+        elif len(cpf) != 11 and secondDigit == True or len(cpf) == 11:
             
             if secondDigit == True:
                  cpf = cpf[0:10]
