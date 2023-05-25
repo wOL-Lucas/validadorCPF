@@ -41,9 +41,3 @@ class Cpf:
             return True
 
         return False
-
-
-
-
-cpf = Cpf('11502981971')
-print(cpf.isValid())
