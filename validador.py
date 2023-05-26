@@ -11,7 +11,7 @@ class Cpf:
 
         return self.values
     
-    def Reversed(self) -> list:
+    def reversed(self) -> list:
         self.values = self.asList()
         self.values.reverse()
         return self.values
