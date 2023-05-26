@@ -29,7 +29,7 @@ class Cpf:
             
             multiplier = 2
             total = 0
-            for number in self.Reversed()[delimeter:11]:
+            for number in self.reversed()[delimeter:11]:
                 total += int(number) * multiplier
                 multiplier += 1
 
