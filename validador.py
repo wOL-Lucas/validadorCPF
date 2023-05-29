@@ -1,8 +1,15 @@
 class Cpf:
-    def __init__(self, number)-> None:
-        self.number = str(number).replace('.','').replace('-','')
-        if len(self.number) != 11:
-            raise Exception ("Invalid Object CPF number. Len needs to be == 11")
+    def __init__(self, number: str)-> None:
+        self.number = self._sanitize(number)
+
+
+    def _sanitize(self,number: str):
+        number = number.replace('.','').replace('/','').replace('-','')
+        if len(number) != 11:
+            raise Exception ("Invalid Object CPF number: Invalid CPF length")
+        else:
+            return number
+
 
     def asList(self) -> list:
         self.values = []
@@ -11,7 +18,7 @@ class Cpf:
 
         return self.values
     
-    def reversed(self) -> list:
+    def Reversed(self) -> list:
         self.values = self.asList()
         self.values.reverse()
         return self.values
@@ -29,8 +36,8 @@ class Cpf:
             
             multiplier = 2
             total = 0
-            for number in self.reversed()[delimeter:11]:
-                total += int(number) * multiplier
+            for num in self.Reversed()[delimeter:11]:
+                total += int(num) * multiplier
                 multiplier += 1
 
             rest = total % 11
@@ -38,25 +45,28 @@ class Cpf:
             else: digit = 11 - rest
 
             digits += str(digit)
-            digits = digits[::-1]
         
-        if digits == self.number[9:11]:
-            return True
+        return digits[::-1] == self.number[9:11]
 
-        return False
 
 
 class Cnpj:
-    def __init__(self, number):
-        self.number = str(number).replace('.','').replace('/','').replace('-','')
+    def __init__(self, number: str):
+        self.number = self._sanitize(number)
+        
+    def _sanitize(self, number:str):
+        number = number.replace('.','').replace('/','').replace('-','')
         if len(number) != 14:
-            raise Exception('Invalid Object CNPJ number. Len needs to be == 14')
+            raise Exception('Invalid Object CNPJ number. Invalid CNPJ length')
+        
+        else:
+            return number
 
     def asList(self) -> list:
         self.values = []
         for algarism in self.number:
             self.values.append(algarism)
-        
+
         return self.values
 
     def isValid(self)-> bool:
@@ -86,23 +96,19 @@ class Cnpj:
 
             digits += str(digit)
         
-        if digits == self.number[12:14]:
-            return True
-        
-        return False
+        return digits == self.number[12:14]
 
 
-def validate(numero) -> None:
-    length = len(numero)
-    if length == 11 or length == 14:
-        
-        if length == 11:
-            cpf = Cpf(numero)
-            print(cpf.isValid())
-            return
-        
-        cnpj = Cnpj(numero)
-        print(cnpj.isValid())
-        
-    else:
-        raise Exception('Comprimento invalido.')
+
+def validate(numero: str) -> None:
+    try:
+        cpf = Cpf(numero)
+        print(cpf.isValid())
+
+    except Exception as e1:
+        try:
+            cnpj = Cnpj(numero)
+            print(cnpj.isValid())
+
+        except Exception as e2:
+            print(e1,'\n\------------------- \n', e2)
